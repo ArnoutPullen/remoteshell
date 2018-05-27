@@ -7,23 +7,17 @@ app.get('/', (req, res) => {
 });
 
 app.get('/api/files', (req, res) => {
-	if (req.params.parent != null) {
-		exec('ls /' + req.params.parent, (err, stdout, stderr) => {
-			res.json({
-				"err": err,
-				"stdout": stdout,
-				"stderr": stderr
-			});
-		});
-	} else {
-		exec('ls /', (err, stdout, stderr) => {
-			res.json({
-				"err": err,
-				"stdout": stdout,
-				"stderr": stderr
-			});
-		});
+	var query = 'ls /';
+	if (req.query.parent != null) {
+		query += req.query.parent;
 	}
+	exec(query, (err, stdout, stderr) => {
+		res.json({
+			"err": err,
+			"stdout": stdout,
+			"stderr": stderr
+		});
+	});
 });
 
 app.get('/api/files/:folder', (req, res) => {
