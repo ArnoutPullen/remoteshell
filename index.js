@@ -3,23 +3,27 @@ const app = express();
 const exec = require('child_process').exec;
 
 app.get('/', (req, res) => {
-	exec('ls /', (err, stdout, stderr) => {
-		res.json({
-			"err": err,
-			"stdout": stdout,
-			"stderr": stderr
-		});
-	});
+	res.send('hello');
 });
 
 app.get('/api/files', (req, res) => {
-	exec('ls /', (err, stdout, stderr) => {
-		res.json({
-			"err": err,
-			"stdout": stdout,
-			"stderr": stderr
+	if (req.params.parent != null) {
+		exec('ls /' + req.params.parent, (err, stdout, stderr) => {
+			res.json({
+				"err": err,
+				"stdout": stdout,
+				"stderr": stderr
+			});
 		});
-	});
+	} else {
+		exec('ls /', (err, stdout, stderr) => {
+			res.json({
+				"err": err,
+				"stdout": stdout,
+				"stderr": stderr
+			});
+		});
+	}
 });
 
 app.get('/api/files/:folder', (req, res) => {
@@ -44,5 +48,5 @@ app.get('/api/custom', (req, res) => {
 
 const port = process.env.port || 3000;
 app.listen(port, () => {
-	console.log(`Listening on port ${port}`);
+	console.log(`Listening on port ${port}...`);
 });
