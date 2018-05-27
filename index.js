@@ -8,8 +8,8 @@ app.get('/', (req, res) => {
 
 app.get('/api/files', (req, res) => {
 	var query = 'ls /';
-	if (req.query.parent != null) {
-		query += req.query.parent;
+	if (req.query.folder != null) {
+		query += req.query.folder;
 	}
 	exec(query, (err, stdout, stderr) => {
 		res.json({
