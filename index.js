@@ -12,7 +12,7 @@ function response(error, output, stderror) {
 	return {
 		"error": error,
 		"response": output,
-		"stderr": stderr
+		"stderror": stderror
 	};
 }
 
