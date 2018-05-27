@@ -27,7 +27,7 @@ app.get('/api/files', (req, res) => {
 });
 
 app.get('/api/files/:folder', (req, res) => {
-	exec('ls /' + req.params.folder, (err, stdout, stderr) => {
+	exec('ls /' + req.query.folder, (err, stdout, stderr) => {
 		res.json({
 			"err": err,
 			"stdout": stdout,
