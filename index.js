@@ -13,7 +13,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/api/files', (req, res) => {
-	exec('ls /', (err stdout, stderr) => {
+	exec('ls /', (err, stdout, stderr) => {
 		res.json({
 			"err": err,
 			"stdout": stdout,
