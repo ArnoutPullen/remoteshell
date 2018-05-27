@@ -5,13 +5,13 @@ const exec = require('child_process').exec;
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
-function response(error, response, stderror) {
-	if (stdout.includes("\n")) {
-		stdout = stdout.split("\n");
+function response(error, output, stderror) {
+	if (output.includes("\n")) {
+		output = output.split("\n");
 	}
 	return {
 		"error": error,
-		"response": response,
+		"response": output,
 		"stderr": stderr
 	};
 }
