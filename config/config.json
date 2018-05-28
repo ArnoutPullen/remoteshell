@@ -1,0 +1,12 @@
+{
+    "database": {
+        "prefix": "/api/"
+    },
+    "schema": {
+        "ubuntu": {
+            "diretory": {
+                "create": "mkdir "
+            }
+        }
+    }
+}
