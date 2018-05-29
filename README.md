@@ -8,7 +8,9 @@ Execute remote commands using this API
 
 # API
 `http://localhost:3000/api/services`
+
 `http://localhost:3000/api/files`
+
 `http://localhost:3000/api/custom?command=ls`
 
 # TODO
