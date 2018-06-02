@@ -1,40 +1,35 @@
 var express = require('express');
 var router = express.Router();
+const execute = require('child_process').exec;
+const responseConverter = require('../core/responseConverter');
 
-router.get('/', (req, res) => {
+// All files
+router.get('/', (request, response) => {
     var command = 'ls /';
-    if (req.command.folder != null) {
-        command += req.command.folder;
+    if (request.query.folder != null) {
+        command += request.query.folder;
     }
-    exec(command, (err, stdout, stderr) => {
-        if (stdout.includes("\n")) {
-            stdout = stdout.split("\n");
-        }
-        res.json(response(err, stdout, stderr));
+    execute(command, (error, output, outputError) => {
+        response.json(responseConverter(error, output, outputError));
     });
 });
 
-router.get('/:folder', (req, res) => {
-    exec('ls /' + req.command.folder, (err, stdout, stderr) => {
-        res.json(response(err, stdout, stderr));
-    });
-});
-
-router.post('/create', (req, res) => {
+// Create file
+router.post('/create', (request, response) => {
     var command = '';
-    if (req.body.type == 'folder') {
+    if (request.body.type == 'folder') {
         command += 'mkdir ';
-    } else if (req.body.type == 'file') {
+    } else if (request.body.type == 'file') {
         command += 'touch ';
     }
-    if (req.body.folder != null) {
-        command += `/${req.body.folder}/`;
+    if (request.body.folder != null) {
+        command += `/${request.body.folder}/`;
     }
-    if (req.body.name != null) {
-        command += req.body.name;
+    if (request.body.name != null) {
+        command += request.body.name;
     }
-    exec(command, (err, stdout, stderr) => {
-        res.json(response(err, stdout, stderr));
+    execute(command, (error, output, outputError) => {
+        response.json(responseConverter(error, output, outputError));
     });
 });
 

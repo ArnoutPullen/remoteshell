@@ -1,65 +1,57 @@
 var express = require('express');
 var router = express.Router();
+const execute = require('child_process').exec;
+const responseConverter = require('../core/responseConverter');
 
-router.get('/', (req, res) => {
-    var command = 'services --status-all';
-    exec(command, (err, stdout, stderr) => {
-        if (stdout.includes("\n")) {
-            stdout = stdout.split("\n");
-        }
-        res.json(response(err, stdout, stderr));
+// All services
+router.get('/', (request, response) => {
+    var command = 'service --status-all';
+    execute(command, (error, output, outputError) => {
+        response.json(responseConverter(error, output, outputError));
     });
 });
 
-router.get('/:service', (req, res) => {
-    var command = 'services ';
-    if (req.params.service != null) {
-        command += req.params.service;
+// Get status service
+router.get('/:service', (request, response) => {
+    var command = 'service ';
+    if (request.params.service != null) {
+        command += `${request.params.service} status`;
     }
-    exec(command, (err, stdout, stderr) => {
-        if (stdout.includes("\n")) {
-            stdout = stdout.split("\n");
-        }
-        res.json(response(err, stdout, stderr));
+    execute(command, (error, output, outputError) => {
+        response.json(responseConverter(error, output, outputError));
     });
 });
 
-router.get('/:service/start', (req, res) => {
-    var command = 'services ';
-    if (req.params.service != null) {
-        command += `${req.params.service} start`;
+// Start service
+router.get('/:service/start', (request, response) => {
+    var command = 'service ';
+    if (request.params.service != null) {
+        command += `${request.params.service} start`;
     }
-    exec(command, (err, stdout, stderr) => {
-        if (stdout.includes("\n")) {
-            stdout = stdout.split("\n");
-        }
-        res.json(response(err, stdout, stderr));
+    execute(command, (error, output, outputError) => {
+        response.json(responseConverter(error, output, outputError));
     });
 });
 
-router.get('/:service/restart', (req, res) => {
-    var command = 'services ';
-    if (req.params.service != null) {
-        command += `${req.params.service} restart`;
+// Restart service
+router.get('/:service/restart', (request, response) => {
+    var command = 'service ';
+    if (request.params.service != null) {
+        command += `${request.params.service} restart`;
     }
-    exec(command, (err, stdout, stderr) => {
-        if (stdout.includes("\n")) {
-            stdout = stdout.split("\n");
-        }
-        res.json(response(err, stdout, stderr));
+    execute(command, (error, output, outputError) => {
+        response.json(responseConverter(error, output, outputError));
     });
 });
 
-router.get('/:service/stop', (req, res) => {
-    var command = 'services ';
-    if (req.params.service != null) {
-        command += `${req.params.service} stop`;
+// Stop service
+router.get('/:service/stop', (request, response) => {
+    var command = 'service ';
+    if (request.params.service != null) {
+        command += `${request.params.service} stop`;
     }
-    exec(command, (err, stdout, stderr) => {
-        if (stdout.includes("\n")) {
-            stdout = stdout.split("\n");
-        }
-        res.json(global.response(err, stdout, stderr));
+    execute(command, (error, output, outputError) => {
+        response.json(responseConverter(error, output, outputError));
     });
 });
 

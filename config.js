@@ -1,3 +1,6 @@
-module.exports = {
-    "prefix": "/api/"
-};
+var config = {};
+
+config.api = {};
+config.api.prefix = '/api';
+
+module.exports = config;
