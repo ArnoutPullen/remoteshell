@@ -6,7 +6,9 @@ const responseConverter = require('../core/responseConverter');
 
 // http://localhost:3000/api/custom/?command=ls
 router.get('/', (request, response) => {
-    execute(request.query.command, (error, output, outputError) => {
+    var command = request.query.command;
+    console.log(command);
+    execute(command, (error, output, outputError) => {
         response.json(responseConverter(error, output, outputError));
     });
 });

@@ -6,6 +6,7 @@ const responseConverter = require('../core/responseConverter');
 // All services
 router.get('/', (request, response) => {
     var command = 'service --status-all';
+    console.log(command);
     execute(command, (error, output, outputError) => {
         response.json(responseConverter(error, output, outputError));
     });
@@ -17,6 +18,7 @@ router.get('/:service', (request, response) => {
     if (request.params.service != null) {
         command += `${request.params.service} status`;
     }
+    console.log(command);
     execute(command, (error, output, outputError) => {
         response.json(responseConverter(error, output, outputError));
     });
@@ -28,6 +30,7 @@ router.get('/:service/start', (request, response) => {
     if (request.params.service != null) {
         command += `${request.params.service} start`;
     }
+    console.log(command);
     execute(command, (error, output, outputError) => {
         response.json(responseConverter(error, output, outputError));
     });
@@ -39,6 +42,7 @@ router.get('/:service/restart', (request, response) => {
     if (request.params.service != null) {
         command += `${request.params.service} restart`;
     }
+    console.log(command);
     execute(command, (error, output, outputError) => {
         response.json(responseConverter(error, output, outputError));
     });
@@ -50,6 +54,7 @@ router.get('/:service/stop', (request, response) => {
     if (request.params.service != null) {
         command += `${request.params.service} stop`;
     }
+    console.log(command);
     execute(command, (error, output, outputError) => {
         response.json(responseConverter(error, output, outputError));
     });
