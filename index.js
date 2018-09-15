@@ -1,10 +1,12 @@
 const express = require('express');
 const app = express();
+var cors = require('cors');
 var config = require('./config');
 const port = process.env.port || 3000;
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
+app.use(cors({origin: 'http://localhost:4200'}));
 
 // Register Routes
 app.use(config.api.prefix + '/files', require('./routes/files'));
